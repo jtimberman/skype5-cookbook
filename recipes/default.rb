@@ -37,6 +37,10 @@ unless ::File.directory?("/Applications/Skype.app")
 
   execute "umount /Volumes/Skype"
 
+  file "/Applications/Skype.app/Contents/MacOS/Skype" do
+    mode 0755
+  end
+
 end
 
 if node["skype5"]["chat_style"]
