@@ -22,7 +22,7 @@ dmg_file = "#{Chef::Config[:file_cache_path]}/Skype5.dmg"
 unless ::File.directory?("/Applications/Skype.app")
 
   remote_file dmg_file do
-    source "http://www.skype.com/go/getskype-macosx-beta"
+    source "http://www.skype.com/go/getskype-macosx.dmg"
     not_if { ::File.directory?("/Applications/Skype.app") }
   end
   

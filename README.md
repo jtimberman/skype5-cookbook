@@ -1,7 +1,12 @@
 DESCRIPTION
 ===========
 
-Installs Skype 5 beta and ChatStyle [Brief](http://media.miekd.com/brief/) for Mac OS X.
+Installs Skype 5 and ChatStyle [Brief](http://media.miekd.com/brief/) for Mac OS X.
+
+CHANGES
+=======
+
+- 1.0.2: update url for non-beta version of Skype 5 on OSX. To upgrade, remove Skype.app from /Applications.
 
 REQUIREMENTS
 ============
@@ -16,7 +21,7 @@ ATTRIBUTES
 USAGE
 =====
 
-Use the skype5 default recipe to install Skype 5 beta. Set the `node["skype5"]["chat_style"]` to another ChatStyle URL if you don't want the Brief style, or set it to false if you don't want any ChatStyle installed.
+Use the skype5 default recipe to install Skype 5. Set the `node["skype5"]["chat_style"]` to another ChatStyle URL if you don't want the Brief style, or set it to false if you don't want any ChatStyle installed.
 
 LICENSE AND AUTHOR
 ==================
