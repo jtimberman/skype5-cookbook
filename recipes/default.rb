@@ -17,30 +17,10 @@
 # limitations under the License.
 #
 
-dmg_file = "#{Chef::Config[:file_cache_path]}/Skype5.dmg"
-
 unless ::File.directory?("/Applications/Skype.app")
-
-  remote_file dmg_file do
+  dmg_package "Skype" do
     source "http://www.skype.com/go/getskype-macosx.dmg"
-    not_if { ::File.directory?("/Applications/Skype.app") }
   end
-  
-  execute "hdid #{dmg_file}"
-
-  ruby_block "Install Skype" do
-    block do
-      Chef::Log.info("Installing Skype.app to /Applications")
-      ::FileUtils.cp_r("/Volumes/Skype/Skype.app", "/Applications/")
-    end
-  end
-
-  execute "umount /Volumes/Skype"
-
-  file "/Applications/Skype.app/Contents/MacOS/Skype" do
-    mode 0755
-  end
-
 end
 
 if node["skype5"]["chat_style"]
@@ -49,7 +29,9 @@ if node["skype5"]["chat_style"]
   style_dir = "#{ENV['HOME']}/Library/Application Support/Skype/ChatStyles"
   style_unzip = "#{Chef::Config[:file_cache_path]}/#{node["skype5"]["style_basedir"]}/#{node["skype5"]["style_name"]}.SkypeChatStyle" 
 
-  directory"#{ENV['HOME']}/Library/Application Support/Skype/ChatStyles"
+  directory"#{ENV['HOME']}/Library/Application Support/Skype/ChatStyles" do
+    recursive true
+  end
 
   remote_file style_file do
     source node["skype5"]["chat_style"]
@@ -59,15 +41,16 @@ if node["skype5"]["chat_style"]
   execute "unzip #{style_file}" do
     cwd Chef::Config[:file_cache_path]
     creates style_unzip
+    notifies :create, "ruby_block[Install ChatStyle #{node["skype5"]["style_name"]}]"
   end
 
   ruby_block "Install ChatStyle #{node["skype5"]["style_name"]}" do
     block do
-      Chef::Log.info("Installing ChatStyle #{node["skype5"]["style_name"]}")
+      Chef::Log.debug("Installing ChatStyle #{node["skype5"]["style_name"]}")
       ::FileUtils.cp_r(style_unzip, style_dir)
-      Chef::Log.info("ChatStyle #{node["skype5"]["style_name"]} installed, set in Skype preferences")
+      Chef::Log.debug("ChatStyle #{node["skype5"]["style_name"]} installed, set in Skype preferences")
     end
-    action :create
+    action :nothing
   end
   
 end

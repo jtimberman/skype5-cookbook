@@ -6,12 +6,20 @@ Installs Skype 5 and ChatStyle [Brief](http://media.miekd.com/brief/) for Mac OS
 CHANGES
 =======
 
+- 1.0.4: use dmg_package LWRP
+- 1.0.3: notify ruby block
 - 1.0.2: update url for non-beta version of Skype 5 on OSX. To upgrade, remove Skype.app from /Applications.
 
 REQUIREMENTS
 ============
 
-Platform: Mac OS X
+## Platform
+
+* Mac OS X
+
+## Cookbooks
+
+* dmg
 
 ATTRIBUTES
 ==========
